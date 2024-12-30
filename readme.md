@@ -28,8 +28,12 @@ Or alternatively run the executable file directly and provide a port (default: 8
 ./main [port]
 ```
 
+<br>
+
 ## 🌟 Credits
 This project was developed and is maintained by [gkkconan](https://github.com/gkkconan).
+
+<br>
 
 ## 📜 License
 This project is open-source and available under the [MIT License](https://github.com/gkkconan/ws-c/blob/main/LICENSE).
