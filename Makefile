@@ -1,17 +1,16 @@
 CC = gcc
 CFLAGS = -Wall
-TARGET = main
+TARGET = bin/main
+SOURCES = src/main.c src/conn.c
 
 all: $(TARGET)
 
-$(TARGET): main.o
-	$(CC) $(CFLAGS) -o $(TARGET) main.o
+$(TARGET): $(SOURCES)
+	mkdir -p bin
+	$(CC) $(CFLAGS) -o $@ $^
 
-main.o: main.c
-	$(CC) $(CFLAGS) -c main.c
-
-run: $(TARGET)
+run: all
 	./$(TARGET)
 
 clean:
-	rm -f $(TARGET) *.o
+	rm -f $(TARGET)
