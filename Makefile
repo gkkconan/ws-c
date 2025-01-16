@@ -3,7 +3,7 @@ CFLAGS = -Wall
 TARGET = bin/main
 SOURCES = src/main.c src/conn.c
 
-all: $(TARGET)
+all: clean $(TARGET)
 
 $(TARGET): $(SOURCES)
 	mkdir -p bin

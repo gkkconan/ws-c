@@ -1,9 +1,10 @@
 #include "../include/conn.h"
 
 
-int initialize(int port, int sockfd, struct sockaddr_in *host_addr, unsigned int host_addrlen){
+int initialize(int port, int sockfd, struct sockaddr_in *host_addr, unsigned int host_addrlen, uint sock_option){
     if(sockfd != -1) printf("socket file descriptor: %d\n", sockfd);
-
+    if(setsockopt(sockfd, SOL_SOCKET, SO_REUSEADDR, &sock_option, sizeof(sock_option)) < 0) return 1;
+    
     if(bind(sockfd, (struct sockaddr *)host_addr, (socklen_t)host_addrlen) != 0) return 1;
     printf("socket bound\n");
 

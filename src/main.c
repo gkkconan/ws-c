@@ -13,6 +13,7 @@
 
 
 #define BUFFER_SIZE 1024
+#define REUSE_ADDR_OPTION 1
 
 //**************************************************
 
@@ -35,13 +36,15 @@ int main(int argc, char *argv[]){
     unsigned int host_addrlen = sizeof(host_addr);
     unsigned int client_addrlen = sizeof(client_addr);
 
+
+
     signal(SIGINT, closeSocket); // handle SIGNINT
-    initialize(port, sockfd, &host_addr, host_addrlen);
+    initialize(port, sockfd, &host_addr, host_addrlen, REUSE_ADDR_OPTION);
 
     while(1){
         memset(&client_addr, 0, sizeof(client_addr));
         memset(buffer, 0, BUFFER_SIZE);
-        
+
         int newsockfd = acceptConnection(sockfd, &host_addr, client_addr, host_addrlen);
         int sockn = getsockname(newsockfd, (struct sockaddr *)&client_addr, (socklen_t *)&client_addrlen);
         if (sockn < 0) continue;
