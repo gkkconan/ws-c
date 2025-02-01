@@ -1,5 +1,6 @@
-#include "../include/conn.h"
+#include "../include/global.h"
 
+extern int sockfd, newsockfd; 
 
 int initialize(int port, int sockfd, struct sockaddr_in *host_addr, unsigned int host_addrlen, uint sock_option){
     if(sockfd != -1) printf("socket file descriptor: %d\n", sockfd);

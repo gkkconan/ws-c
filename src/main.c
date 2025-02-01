@@ -2,15 +2,10 @@
 //  ┃   SOCKET   ┃ ▶ ┃    BIND    ┃ ▶ ┃   LISTEN   ┃ ▶ ┃   ACCEPT   ┃ ▶ ┃  READ/WRITE  ┃
 //  ┗━━━━━━━━━━━━┛   ┗━━━━━━━━━━━━┛   ┗━━━━━━━━━━━━┛   ┗━━━━━━━━━━━━┛   ┗━━━━━━━━━━━━━━┛
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <errno.h>
-#include <string.h>
-#include <sys/socket.h>
-#include <arpa/inet.h>
-#include <unistd.h>
-#include "../include/conn.h"
+#include "../include/global.h"
 
+int sockfd;
+int newsockfd;
 
 #define BUFFER_SIZE 1024
 #define REUSE_ADDR_OPTION 1
@@ -19,7 +14,7 @@
 
 int main(int argc, char *argv[]){
     int port = (argc > 1) ? atoi(argv[1]) : 8080;
-    int sockfd = socket(AF_INET, SOCK_STREAM, 0); // socket file descriptor, access point to the socket
+    sockfd = socket(AF_INET, SOCK_STREAM, 0); // socket file descriptor, access point to the socket
     char buffer[BUFFER_SIZE];
     char resp[] = "HTTP/1.0 200 OK\r\n"
                     "Server: webserver-c\r\n"
@@ -45,7 +40,7 @@ int main(int argc, char *argv[]){
         memset(&client_addr, 0, sizeof(client_addr));
         memset(buffer, 0, BUFFER_SIZE);
 
-        int newsockfd = acceptConnection(sockfd, &host_addr, client_addr, host_addrlen);
+        newsockfd = acceptConnection(sockfd, &host_addr, client_addr, host_addrlen);
         int sockn = getsockname(newsockfd, (struct sockaddr *)&client_addr, (socklen_t *)&client_addrlen);
         if (sockn < 0) continue;
 
