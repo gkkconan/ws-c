@@ -1,16 +1,27 @@
 CC = gcc
-CFLAGS = -Wall
-TARGET = bin/main
-SOURCES = src/main.c src/conn.c
+CFLAGS = -Wall -Iinclude
+TARGET = ws
+SRC_DIR = src
+BUILD_DIR = bin
+SRC = $(SRC_DIR)/main.c $(SRC_DIR)/conn.c
+OBJ = $(SRC:$(SRC_DIR)/%.c=$(BUILD_DIR)/%.o)
 
-all: clean $(TARGET)
+all: $(TARGET)
 
-$(TARGET): $(SOURCES)
-	mkdir -p bin
-	$(CC) $(CFLAGS) -o $@ $^
+$(TARGET): $(OBJ) | $(BUILD_DIR)
+	$(CC) $(CFLAGS) $^ -o $@
 
-run: all
+# compile src files in BUILD_DIR
+$(BUILD_DIR)/%.o: $(SRC_DIR)/%.c | $(BUILD_DIR)
+	$(CC) $(CFLAGS) -c $< -o $@
+
+$(BUILD_DIR):
+	mkdir -p $(BUILD_DIR)
+
+.PHONY: run
+run: $(TARGET)
 	./$(TARGET)
 
+.PHONY: clean
 clean:
-	rm -f $(TARGET)
+	rm -rf $(BUILD_DIR) $(TARGET)

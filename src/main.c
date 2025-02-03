@@ -2,7 +2,7 @@
 //  ┃   SOCKET   ┃ ▶ ┃    BIND    ┃ ▶ ┃   LISTEN   ┃ ▶ ┃   ACCEPT   ┃ ▶ ┃  READ/WRITE  ┃
 //  ┗━━━━━━━━━━━━┛   ┗━━━━━━━━━━━━┛   ┗━━━━━━━━━━━━┛   ┗━━━━━━━━━━━━┛   ┗━━━━━━━━━━━━━━┛
 
-#include "../include/global.h"
+#include "global.h"
 
 int sockfd;
 int newsockfd;
@@ -20,7 +20,7 @@ int main(int argc, char *argv[]){
                     "Server: webserver-c\r\n"
                     "Content-type: text/html\r\n\r\n"
                     "<html> Hello world! </html>\r\n";
-    
+
     // host and client
     struct sockaddr_in client_addr;
     struct sockaddr_in host_addr = {

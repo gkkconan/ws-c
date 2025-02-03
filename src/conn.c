@@ -1,11 +1,11 @@
-#include "../include/global.h"
+#include "global.h"
 
-extern int sockfd, newsockfd; 
+extern int sockfd, newsockfd;
 
-int initialize(int port, int sockfd, struct sockaddr_in *host_addr, unsigned int host_addrlen, uint sock_option){
+int initialize(int port, int sockfd, struct sockaddr_in *host_addr, unsigned int host_addrlen, unsigned int sock_option){
     if(sockfd != -1) printf("socket file descriptor: %d\n", sockfd);
     if(setsockopt(sockfd, SOL_SOCKET, SO_REUSEADDR, &sock_option, sizeof(sock_option)) < 0) return 1;
-    
+
     if(bind(sockfd, (struct sockaddr *)host_addr, (socklen_t)host_addrlen) != 0) return 1;
     printf("socket bound\n");
 
@@ -18,7 +18,7 @@ int acceptConnection(int sockfd, struct sockaddr_in *host_addr, struct sockaddr_
     return accept(sockfd, (struct sockaddr *)host_addr, (socklen_t *)&host_addrlen);
 }
 
-int readRequest(int newsockfd, char *buffer, size_t buffer_size){
+int readRequest(int newsockfd, char *buffer, unsigned int buffer_size){
     return read(newsockfd, buffer, buffer_size-1);
 }
 
