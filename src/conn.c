@@ -22,8 +22,14 @@ int readRequest(int newsockfd, char *buffer, unsigned int buffer_size){
     return read(newsockfd, buffer, buffer_size-1);
 }
 
-int sendResponse(int newsockfd, char *resp){
-    return write(newsockfd, resp, strlen(resp));
+int sendResponse(int newsockfd, char *headers, char *page){
+    int total_length = strlen(headers) + strlen(page);
+    char *resp = malloc(total_length + 1);
+
+    strcpy(resp, headers);
+    strcat(resp, page);
+
+    return write(newsockfd, resp, total_length);
 }
 
 void closeSocket(int sig){
